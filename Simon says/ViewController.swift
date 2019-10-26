@@ -15,6 +15,13 @@ class ViewController: UIViewController {
     @IBOutlet var playerLabels: [UILabel]!
     @IBOutlet var scoreLabels: [UILabel]!
     
+    var currentPlayer = 0
+    var scores = [0,0]
+    
+    var sequenceIndex = 0
+    var colorSequence = [Int]()
+    var colorsToTap = [Int]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,17 +48,66 @@ class ViewController: UIViewController {
         print("Button \(sender.tag) tapped!")
     }
     
+    // The "Start Game" button gets pressed
     @IBAction func actionButtonHandler(_ sender: UIButton) {
-        print("Action Button")
+        sequenceIndex = 0
+        actionButton.setTitle("Memorize!", for: .normal)
+        actionButton.isEnabled = false
+        
+        // the sequence starts playing and we do want to ignore all the user taps
+        view.isUserInteractionEnabled = false
+        
+        addNewColor()
+        
+        // after one second we will start playing the sequence
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.playSequence()
+        }
     }
     
     func createNewGame() {
         // change the action button text
         actionButton.setTitle("Start Game", for: .normal)
         
-        // reduce the opacity of all the color buttons
+        // reduce the opacity of all the color buttons and disable them
         for button in colorButtons {
             button.alpha = 0.5
+            button.isEnabled = false
+        }
+        
+        // at the beginning, the start button can be clicked
+        actionButton.isEnabled = true
+        
+        // at the beginning, there is no sequence
+        colorSequence.removeAll()
+    }
+    
+    func addNewColor() {
+        colorSequence.append(Int.random(in: 0...3))
+    }
+    
+    func playSequence() {
+        if sequenceIndex < colorSequence.count {
+            flash(btn: colorButtons[colorSequence[sequenceIndex]])
+            sequenceIndex += 1
+        } else {
+            // the sequence finished playing
+            colorsToTap = colorSequence
+            view.isUserInteractionEnabled = true
+            actionButton.setTitle("Tap the circles!", for: .normal)
+            
+            for button in colorButtons {
+                button.isEnabled = true
+            }
+        }
+    }
+    
+    func flash(btn: CircularButton) {
+        UIView.animate(withDuration: 0.5, animations: {
+            btn.alpha = 1.0
+            btn.alpha = 0.5
+        }) { (bool) in
+            self.playSequence()
         }
     }
 }
