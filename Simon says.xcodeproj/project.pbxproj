@@ -13,6 +13,7 @@
 		16688BA923647198009B587D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16688BA723647198009B587D /* Main.storyboard */; };
 		16688BAB2364719A009B587D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16688BAA2364719A009B587D /* Assets.xcassets */; };
 		16688BAE2364719A009B587D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16688BAC2364719A009B587D /* LaunchScreen.storyboard */; };
+		16688BB623648782009B587D /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16688BB523648782009B587D /* CircularButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		16688BAA2364719A009B587D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16688BAD2364719A009B587D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		16688BAF2364719A009B587D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16688BB523648782009B587D /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				16688BAA2364719A009B587D /* Assets.xcassets */,
 				16688BAC2364719A009B587D /* LaunchScreen.storyboard */,
 				16688BAF2364719A009B587D /* Info.plist */,
+				16688BB523648782009B587D /* CircularButton.swift */,
 			);
 			path = "Simon says";
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16688BB623648782009B587D /* CircularButton.swift in Sources */,
 				16688BA623647198009B587D /* ViewController.swift in Sources */,
 				16688BA223647198009B587D /* AppDelegate.swift in Sources */,
 				16688BA423647198009B587D /* SceneDelegate.swift in Sources */,
