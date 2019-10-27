@@ -45,7 +45,28 @@ class ViewController: UIViewController {
     }
 
     @IBAction func colorButtonHandler(_ sender: CircularButton) {
-        print("Button \(sender.tag) tapped!")
+        // check if the user tapped the correct button
+        
+        // check if the sender tag is equal to the tag of the first element of
+        // the sequence of colorsToTap and remove the element thereafter
+        if sender.tag == colorsToTap.removeFirst() {
+            
+        } else {
+            // wrong button tapped
+            for button in colorButtons {
+                button.isEnabled = false
+            }
+            return
+        }
+        
+        // we tapped all the colors in the sequence and colorsToTap is empty
+        if colorsToTap.isEmpty {
+            for button in colorButtons {
+                button.isEnabled = false
+            }
+            actionButton.setTitle("Continue", for: .normal)
+            actionButton.isEnabled = true
+        }
     }
     
     // The "Start Game" button gets pressed
