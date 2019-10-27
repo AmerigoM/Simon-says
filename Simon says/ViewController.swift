@@ -22,6 +22,11 @@ class ViewController: UIViewController {
     var colorSequence = [Int]()
     var colorsToTap = [Int]()
     
+    // it is set to true only when the game is finished (aka the player makes a mistake)
+    var gameEnded = false
+    
+    //MARK: - Override methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +48,16 @@ class ViewController: UIViewController {
         // create a new game
         createNewGame()
     }
+    
+    // invoked anytime there is a touch on the screen
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gameEnded {
+            gameEnded = false
+            createNewGame()
+        }
+    }
+    
+    // MARK: - IBAction methods
 
     @IBAction func colorButtonHandler(_ sender: CircularButton) {
         // check if the user tapped the correct button
@@ -56,6 +71,8 @@ class ViewController: UIViewController {
             for button in colorButtons {
                 button.isEnabled = false
             }
+            
+            endGame()
             return
         }
         
@@ -64,6 +81,11 @@ class ViewController: UIViewController {
             for button in colorButtons {
                 button.isEnabled = false
             }
+            
+            scores[currentPlayer] += 1
+            updateScoreLabels()
+            switchPlayers()
+            
             actionButton.setTitle("Continue", for: .normal)
             actionButton.isEnabled = true
         }
@@ -86,6 +108,8 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - Supporting functions
+    
     func createNewGame() {
         // change the action button text
         actionButton.setTitle("Start Game", for: .normal)
@@ -101,6 +125,22 @@ class ViewController: UIViewController {
         
         // at the beginning, there is no sequence
         colorSequence.removeAll()
+        
+        // empty the players properties
+        currentPlayer = 0
+        scores = [0,0]
+        
+        // enlight the current player that must start playing
+        playerLabels[currentPlayer].alpha = 1.0
+        playerLabels[1].alpha = 0.75
+        
+        updateScoreLabels()
+    }
+    
+    func updateScoreLabels() {
+        for (index, label) in scoreLabels.enumerated() {
+            label.text = "\(scores[index])"
+        }
     }
     
     func addNewColor() {
@@ -130,6 +170,18 @@ class ViewController: UIViewController {
         }) { (bool) in
             self.playSequence()
         }
+    }
+    
+    func switchPlayers() {
+        playerLabels[currentPlayer].alpha = 0.75
+        currentPlayer = currentPlayer == 0 ? 1 : 0
+        playerLabels[currentPlayer].alpha = 1.0
+    }
+    
+    func endGame() {
+        let message = currentPlayer == 0 ? "Player 2 wins" : "Player 1 wins"
+        actionButton.setTitle(message, for: .normal)
+        gameEnded = true
     }
 }
 
